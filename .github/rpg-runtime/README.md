@@ -14,7 +14,10 @@ EmulatorJS 4.2.3 loader. Supported cartridges are `.vec` and `.bin`.
 
 Retrom checkpoint v1 replaces upstream's incomplete serializer. It preserves
 CPU, RAM, VIA, PSG (including register latch and full noise generator), bank
-switching, analog integration, frame timing, both vector lists and vector hash.
+switching, analog integration (including the in-flight vector intensity), frame
+timing, both vector lists and vector hash. The checkpoint regression compares
+the next completed vector before and after restoring a suspended beam, so a
+fresh instance cannot silently turn the saved line black.
 Pointers are reconstructed in the new instance. The format is private to the
 pinned wasm32 core and is not compatible with upstream VecX save files. The
 Provider supplies the outer RetroArch container and one gzip storage layer.
