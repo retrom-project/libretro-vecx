@@ -28,6 +28,7 @@ typedef struct {
    long analog[STATE_LONG_COUNT];
    uint32_t draw_offset;
    char large_cart;
+   unsigned char vector_color;
    unsigned char ram[sizeof(vecx_ram)];
    vector_t vectors[2 * VECTOR_CNT];
    long hash[VECTOR_HASH];
@@ -55,6 +56,7 @@ int vecx_serialize(char *dst, int size)
       state->analog[i] = *state_long[i];
    state->draw_offset = (unsigned)(vectors_draw - vectors_set);
    state->large_cart = big;
+   state->vector_color = alg_vector_color;
    memcpy(state->ram, vecx_ram, sizeof(vecx_ram));
    memcpy(state->vectors, vectors_set, sizeof(vectors_set));
    memcpy(state->hash, vector_hash, sizeof(vector_hash));
@@ -87,6 +89,7 @@ int vecx_deserialize(char *src, int size)
    for (i = 0; i < STATE_LONG_COUNT; ++i)
       *state_long[i] = state->analog[i];
    big = state->large_cart;
+   alg_vector_color = state->vector_color;
    memcpy(vecx_ram, state->ram, sizeof(vecx_ram));
    memcpy(vectors_set, state->vectors, sizeof(vectors_set));
    memcpy(vector_hash, state->hash, sizeof(vector_hash));
